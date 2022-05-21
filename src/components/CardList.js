@@ -1,23 +1,32 @@
+import { getUsers } from "../store/actions/usersActions";
 import React, { Component } from "react";
+import { connect } from "react-redux";
 import "./CardList.css";
 
-export default class CardList extends Component {
+class CardList extends Component {
+  componentDidMount() {
+    this.props.getUsers();
+  }
+
   render() {
-    const items = this.props.items;
+    const { users } = this.props.users;
+
     return (
       <div className="sec-listrepo">
-        {items.map((item) => (
+        {users.map((user) => (
           <div className="card">
             <div className="head">
-              <div className="name">{item.name}</div>
+              <div className="name">{user.name}</div>
               <div className="status">
-                <span>{item.status}</span>
+                <span>{user.visibility}</span>
               </div>
             </div>
-            <div className="body">{item.description}</div>
+            <div className="body">
+              {user.description !== null ? user.description : 'Tidak ada Deskripsi'}
+            </div>
             <div className="footer">
               <div className="status">
-                <span>{item.type}</span>
+                <span>{user.language}</span>
               </div>
             </div>
           </div>
@@ -26,3 +35,7 @@ export default class CardList extends Component {
     );
   }
 }
+
+const mapStateToProps = (state) => ({ users: state.users });
+
+export default connect(mapStateToProps, { getUsers })(CardList);

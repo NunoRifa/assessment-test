@@ -1,7 +1,11 @@
 import { getUsers } from "../store/actions/usersActions";
-import React, { Component } from "react";
+import React, { Component, useRef } from "react";
 import { connect } from "react-redux";
 import "./CardList.css";
+
+const gotoRepo = () => {
+
+}
 
 class CardList extends Component {
   componentDidMount() {
@@ -14,7 +18,7 @@ class CardList extends Component {
     return (
       <div className="sec-listrepo">
         {users.map((user) => (
-          <div className="card">
+          <div className="card" onClick={() => window.open(user.html_url, '_blank')}>
             <div className="head">
               <div className="name">{user.name}</div>
               <div className="status">
